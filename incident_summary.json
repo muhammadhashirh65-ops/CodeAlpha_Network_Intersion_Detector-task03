@@ -1,0 +1,273 @@
+[
+  {
+    "timestamp": "2026-09-08T10:20:37.883490+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 39,
+    "signature": "NIDS - Possible TCP Port Scan (many SYNs, low data)",
+    "severity": 2,
+    "action_taken": [
+      "logged",
+      "notified_oncall"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.884976+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Possible SQL Injection Attempt (UNION SELECT)",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "blocked (iptables -A INPUT -s 203.0.113.50 -j DROP)"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.885808+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Possible SQL Injection Attempt (tautology)",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.886802+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Possible XSS Attempt (script tag in URI)",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.887673+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Possible Directory Traversal Attempt",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.888531+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Plaintext Password Submitted Over HTTP",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.889349+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Plaintext Password Submitted Over HTTP",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.890187+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Plaintext Password Submitted Over HTTP",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.891084+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Plaintext Password Submitted Over HTTP",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.891951+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Plaintext Password Submitted Over HTTP",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.892892+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Plaintext Password Submitted Over HTTP",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.893709+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Plaintext Password Submitted Over HTTP",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.894495+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Plaintext Password Submitted Over HTTP",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.895444+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Plaintext Password Submitted Over HTTP",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.896328+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 80,
+    "signature": "NIDS - Plaintext Password Submitted Over HTTP",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.897203+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 22,
+    "signature": "NIDS - Possible SSH Brute Force (rapid connection attempts)",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.897867+0000",
+    "src_ip": "192.168.1.10",
+    "dest_ip": "8.8.8.8",
+    "dest_port": 53,
+    "signature": "NIDS - Possible DNS Tunneling (abnormally long query name)",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.898529+0000",
+    "src_ip": "192.168.1.10",
+    "dest_ip": "203.0.113.50",
+    "dest_port": 4444,
+    "signature": "NIDS - Possible Reverse Shell / C2 Callback Port",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "blocked (iptables -A INPUT -s 192.168.1.10 -j DROP)"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.898848+0000",
+    "src_ip": "203.0.113.50",
+    "dest_ip": "192.168.1.10",
+    "dest_port": 0,
+    "signature": "NIDS - Oversized ICMP Echo Request (possible covert channel)",
+    "severity": 2,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.881436+0000",
+    "src_ip": "192.168.1.10",
+    "dest_ip": "203.0.113.50",
+    "dest_port": 4444,
+    "signature": "NIDS - Possible Reverse Shell / C2 Callback Port",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  },
+  {
+    "timestamp": "2026-09-08T10:20:37.881436+0000",
+    "src_ip": "192.168.1.10",
+    "dest_ip": "203.0.113.50",
+    "dest_port": 51104,
+    "signature": "NIDS - Possible Web Login Brute Force",
+    "severity": 1,
+    "action_taken": [
+      "logged",
+      "notified_oncall",
+      "already_blocked"
+    ]
+  }
+]

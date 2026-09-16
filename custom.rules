@@ -1,0 +1,92 @@
+# =============================================================================
+# custom.rules — Hand-written detection rules for Task 4: Network Intrusion
+# Detection System
+#
+# Rule syntax: action proto src_ip src_port -> dst_ip dst_port (options)
+# =============================================================================
+
+# --- Reconnaissance / Scanning ----------------------------------------------
+
+# Detect a classic Nmap SYN/connect scan fingerprint by user-agent-less rapid
+# connection attempts is normally done via flow/threshold tracking; here we
+# flag the common Nmap default TCP SYN probe pattern on many ports quickly.
+alert tcp any any -> $HOME_NET any (msg:"NIDS - Possible TCP Port Scan (many SYNs, low data)"; \
+    flow:stateless; flags:S; threshold:type both, track by_src, count 20, seconds 5; \
+    classtype:attempted-recon; sid:1000001; rev:1;)
+
+# Detect Nmap's default OS-fingerprint / service-probe user-agent when it
+# appears in an HTTP request (Nmap's http-headers script leaves a signature).
+alert http any any -> $HOME_NET any (msg:"NIDS - Nmap Scripting Engine User-Agent Detected"; \
+    flow:established,to_server; http.user_agent; content:"Nmap Scripting Engine"; \
+    classtype:attempted-recon; sid:1000002; rev:1;)
+
+# --- Web Application Attacks --------------------------------------------------
+
+# Detect a common SQL injection pattern in an HTTP request (UNION SELECT)
+alert http any any -> $HOME_NET any (msg:"NIDS - Possible SQL Injection Attempt (UNION SELECT)"; \
+    flow:established,to_server; http.uri; content:"UNION"; nocase; content:"SELECT"; nocase; distance:0; \
+    classtype:web-application-attack; sid:1000010; rev:1;)
+
+# Detect classic SQLi tautology pattern ' OR 1=1 (matched against the
+# normalized/decoded URI buffer, since Suricata percent-decodes http.uri
+# by default before content matching).
+alert http any any -> $HOME_NET any (msg:"NIDS - Possible SQL Injection Attempt (tautology)"; \
+    flow:established,to_server; http.uri; content:"OR 1=1"; nocase; \
+    classtype:web-application-attack; sid:1000011; rev:1;)
+
+# Detect reflected XSS payload pattern in a request
+alert http any any -> $HOME_NET any (msg:"NIDS - Possible XSS Attempt (script tag in URI)"; \
+    flow:established,to_server; http.uri; content:"<script"; nocase; \
+    classtype:web-application-attack; sid:1000012; rev:1;)
+
+# Detect directory traversal attempt
+alert http any any -> $HOME_NET any (msg:"NIDS - Possible Directory Traversal Attempt"; \
+    flow:established,to_server; http.uri; content:"../../"; \
+    classtype:web-application-attack; sid:1000013; rev:1;)
+
+# --- Credential / Sensitive Data Exposure ------------------------------------
+
+# Detect plaintext password field submitted over unencrypted HTTP
+alert http any any -> $HOME_NET any (msg:"NIDS - Plaintext Password Submitted Over HTTP"; \
+    flow:established,to_server; http.request_body; content:"password="; nocase; \
+    classtype:policy-violation; sid:1000020; rev:1;)
+
+# Detect an FTP login attempt using well-known default credentials
+alert tcp any any -> $HOME_NET 21 (msg:"NIDS - FTP Login Attempt With Default Credentials (anonymous)"; \
+    flow:established,to_server; content:"USER anonymous"; nocase; \
+    classtype:policy-violation; sid:1000021; rev:1;)
+
+# --- Brute Force -----------------------------------------------------------
+
+# Detect repeated failed SSH connection attempts from a single source
+# (SSH is encrypted, so this keys off connection attempt frequency, not content)
+alert tcp any any -> $HOME_NET 22 (msg:"NIDS - Possible SSH Brute Force (rapid connection attempts)"; \
+    flow:to_server; flags:S; threshold:type both, track by_src, count 10, seconds 30; \
+    classtype:attempted-admin; sid:1000030; rev:1;)
+
+# Detect repeated HTTP 401/403 responses to the same source hitting a login path
+alert http $HOME_NET any -> any any (msg:"NIDS - Possible Web Login Brute Force"; \
+    flow:established,to_client; http.stat_code; content:"401"; \
+    threshold:type both, track by_dst, count 8, seconds 30; \
+    classtype:attempted-admin; sid:1000031; rev:1;)
+
+# --- Malware / C2 Indicators -------------------------------------------------
+
+# Detect a DNS query for a suspicious very-long/high-entropy-looking subdomain
+# (a common DNS-tunneling / C2 beacon indicator)
+alert dns any any -> any any (msg:"NIDS - Possible DNS Tunneling (abnormally long query name)"; \
+    dns.query; pcre:"/^[a-z0-9]{50,}\./i"; \
+    classtype:trojan-activity; sid:1000040; rev:1;)
+
+# Detect outbound connection to a known-bad-pattern raw IP over an
+# uncommon high port often used by simple reverse shells (example range).
+alert tcp $HOME_NET any -> any [4444,1337,31337] (msg:"NIDS - Possible Reverse Shell / C2 Callback Port"; \
+    flow:to_server,established; \
+    classtype:trojan-activity; sid:1000041; rev:1;)
+
+# --- ICMP / Network Abuse ---------------------------------------------------
+
+# Detect an unusually large ICMP echo request (classic "ping of death" style probe / covert channel)
+alert icmp any any -> $HOME_NET any (msg:"NIDS - Oversized ICMP Echo Request (possible covert channel)"; \
+    itype:8; dsize:>1000; \
+    classtype:attempted-dos; sid:1000050; rev:1;)
